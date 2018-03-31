@@ -4,13 +4,13 @@ var sock = null;
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
-    if (connected) {
+    /*if (connected) {
         $("#conversation").show();
     }
     else {
         $("#conversation").hide();
     }
-    $("#greetings").html("");
+    $("#greetings").html("");*/
 }
 
 function connect() {
@@ -23,11 +23,16 @@ function connect() {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });*/
-    sock = new WebSocket('ws://localhost:8080/greeting');
+    sock = new WebSocket('ws://localhost:8080/vehicleData');
 
     // Connection opened
     sock.addEventListener('open', function (event) {
         setConnected(true);
+    });
+
+    // Connection closed
+    sock.addEventListener('close', function () {
+        setConnected(false);
     });
 
     // Listen for messages
